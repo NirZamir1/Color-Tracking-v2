@@ -27,6 +27,7 @@ namespace Color_Tracking_v2
         private float satb;
         private float brightness;
         List<point> points;
+        float d_degConstant;
         public Form1()
         {
             points = new List<point>();
@@ -38,18 +39,30 @@ namespace Color_Tracking_v2
             if (videoDevices.Count > 0)
             {
                 source = new VideoCaptureDevice(videoDevices[0].MonikerString);
-                width = source.VideoCapabilities[0].FrameSize.Width;
-                height = source.VideoCapabilities[0].FrameSize.Height;
+                var max = source.VideoCapabilities[0];
+                foreach(var res in source.VideoCapabilities)
+                {
+                    if (max.FrameSize.Width < res.FrameSize.Width)
+                    {
+                        max = res;
+                    }
+                }
+                source.VideoResolution = max;
+                width = source.VideoResolution.FrameSize.Width;
+                height = source.VideoResolution.FrameSize.Height;
+                d_degConstant = (float) 68.5f / width;
                 source.NewFrame += New_Frame;
                 source.Start();
             }
         }
-
+        
         private void New_Frame(object sender, NewFrameEventArgs eventArgs)
         {
             Bitmap frame = (Bitmap)eventArgs.Frame.Clone();
             frame.RotateFlip(RotateFlipType.RotateNoneFlipX);//mirro
-            FastBitmap mask = getMask((Bitmap)frame.Clone(), ihue, fhue, out point avg);// mask : a picture which contains only the wanted pixels in white color
+           
+            getMask((Bitmap)frame.Clone(), ihue, fhue, out point avg);// mask : a picture which contains only the wanted pixels in white color
+            
             float average = AveragePointDistance(points, avg)/2;
             using (Graphics g = Graphics.FromImage(frame))
             {
@@ -87,8 +100,11 @@ namespace Color_Tracking_v2
                 Pen pen = new Pen(Color.Orange);
                 g.DrawRectangle(pen, mid.x-a/2, mid.y-b/2, a, b);
             }
-            PictureBox2.Image = frame;
-            PictureBox.Image = m2;
+            PictureBox2.Image = m2;
+            float diagonalAngle = mid.x * d_degConstant;
+            Console.WriteLine(diagonalAngle);
+            //mid is the correct point
+            
         }
         FastBitmap DrawMask(IEnumerable<point> points, Color color , int width, int height)
         {
@@ -110,12 +126,11 @@ namespace Color_Tracking_v2
             average = average / points.Count();
             return average;
         }
-        Bitmap getMask(Bitmap Frame, double HueI, double HueF, out point avg)
+        void getMask(Bitmap Frame, double HueI, double HueF, out point avg)
         {
             avg.y = 0;
             avg.x = 0;
             points.Clear();
-            Bitmap frame = Frame;
             float hue;
             float sat;
             float lightness;
@@ -123,26 +138,21 @@ namespace Color_Tracking_v2
             //using hsl color format
             // hue, saturation, lightness
             //---------------------------
-            FastBitmap fastmask = new FastBitmap(width, height);
-            FastBitmap fastframe = frame;
-            for (int x = 0; x < width; x+=2)
+            //FastBitmap fastframe = frame;
+            
+            for (int x = 0; x < width; x+=10)
             {
-                for (int y = 0; y < height; y+=2)
+                for (int y = 0; y < height; y+=10)
                 {
-                    Color color = fastframe.GetPixel(x, y);
+                    Color color = Frame.GetPixel(x, y);
                     lightness = color.GetBrightness();
                     hue = color.GetHue();
                     sat = color.GetSaturation();
                     if (hue < HueF && hue > HueI && sat > satb && lightness > brightness  && lightness < 0.65)
                     {
                         points.Add(new point(x,y));
-                        fastmask.SetPixel(x, y, Color.White);
                         avg.x += x;
                         avg.y += y;
-                    }
-                    else
-                    {
-                        fastmask.SetPixel(x, y, Color.Black);
                     }
                 }
             }
@@ -151,7 +161,6 @@ namespace Color_Tracking_v2
                 avg.x = avg.x / points.Count();
                 avg.y = avg.y / points.Count();
             }
-            return fastmask;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -161,7 +170,7 @@ namespace Color_Tracking_v2
 
         private void FHueBar_Scroll(object sender, ScrollEventArgs e)
         {
-            Console.WriteLine($"Fhue bar val: {FHueBar.Value}");
+            //Console.WriteLine($"Fhue bar val: {FHueBar.Value}");
             fhue = FHueBar.Value * ((float)360 / 100);
 
             FhueText.Text ="Finale hue:"+ fhue;

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.PictureBox = new System.Windows.Forms.PictureBox();
             this.FHueBar = new System.Windows.Forms.HScrollBar();
             this.FhueText = new System.Windows.Forms.TextBox();
             this.IHueBar = new System.Windows.Forms.HScrollBar();
@@ -38,21 +37,12 @@
             this.lightText = new System.Windows.Forms.TextBox();
             this.LightnessBar = new System.Windows.Forms.HScrollBar();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
-            // PictureBox
-            // 
-            this.PictureBox.Location = new System.Drawing.Point(12, 12);
-            this.PictureBox.Name = "PictureBox";
-            this.PictureBox.Size = new System.Drawing.Size(382, 426);
-            this.PictureBox.TabIndex = 0;
-            this.PictureBox.TabStop = false;
-            // 
             // FHueBar
             // 
-            this.FHueBar.Location = new System.Drawing.Point(1016, 79);
+            this.FHueBar.Location = new System.Drawing.Point(1322, 64);
             this.FHueBar.Maximum = 109;
             this.FHueBar.Name = "FHueBar";
             this.FHueBar.Size = new System.Drawing.Size(330, 17);
@@ -62,7 +52,7 @@
             // 
             // FhueText
             // 
-            this.FhueText.Location = new System.Drawing.Point(1016, 37);
+            this.FhueText.Location = new System.Drawing.Point(1322, 23);
             this.FhueText.Name = "FhueText";
             this.FhueText.Size = new System.Drawing.Size(122, 23);
             this.FhueText.TabIndex = 2;
@@ -71,7 +61,7 @@
             // 
             // IHueBar
             // 
-            this.IHueBar.Location = new System.Drawing.Point(1016, 151);
+            this.IHueBar.Location = new System.Drawing.Point(1322, 147);
             this.IHueBar.Maximum = 109;
             this.IHueBar.Name = "IHueBar";
             this.IHueBar.Size = new System.Drawing.Size(330, 17);
@@ -81,7 +71,7 @@
             // 
             // IHueText
             // 
-            this.IHueText.Location = new System.Drawing.Point(1016, 115);
+            this.IHueText.Location = new System.Drawing.Point(1322, 97);
             this.IHueText.Name = "IHueText";
             this.IHueText.Size = new System.Drawing.Size(122, 23);
             this.IHueText.TabIndex = 4;
@@ -90,7 +80,7 @@
             // 
             // SatText
             // 
-            this.SatText.Location = new System.Drawing.Point(1016, 183);
+            this.SatText.Location = new System.Drawing.Point(1322, 184);
             this.SatText.Name = "SatText";
             this.SatText.Size = new System.Drawing.Size(100, 23);
             this.SatText.TabIndex = 5;
@@ -98,7 +88,7 @@
             // 
             // SatBar
             // 
-            this.SatBar.Location = new System.Drawing.Point(1016, 222);
+            this.SatBar.Location = new System.Drawing.Point(1322, 229);
             this.SatBar.Maximum = 109;
             this.SatBar.Name = "SatBar";
             this.SatBar.Size = new System.Drawing.Size(330, 17);
@@ -107,7 +97,7 @@
             // 
             // lightText
             // 
-            this.lightText.Location = new System.Drawing.Point(1016, 269);
+            this.lightText.Location = new System.Drawing.Point(1322, 271);
             this.lightText.Name = "lightText";
             this.lightText.Size = new System.Drawing.Size(100, 23);
             this.lightText.TabIndex = 7;
@@ -115,7 +105,7 @@
             // 
             // LightnessBar
             // 
-            this.LightnessBar.Location = new System.Drawing.Point(1016, 310);
+            this.LightnessBar.Location = new System.Drawing.Point(1322, 313);
             this.LightnessBar.Maximum = 109;
             this.LightnessBar.Name = "LightnessBar";
             this.LightnessBar.Size = new System.Drawing.Size(330, 17);
@@ -124,9 +114,10 @@
             // 
             // PictureBox2
             // 
-            this.PictureBox2.Location = new System.Drawing.Point(400, 12);
+            this.PictureBox2.Location = new System.Drawing.Point(12, 12);
+            this.PictureBox2.MaximumSize = new System.Drawing.Size(1280, 720);
             this.PictureBox2.Name = "PictureBox2";
-            this.PictureBox2.Size = new System.Drawing.Size(377, 426);
+            this.PictureBox2.Size = new System.Drawing.Size(1221, 716);
             this.PictureBox2.TabIndex = 9;
             this.PictureBox2.TabStop = false;
             // 
@@ -134,7 +125,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1355, 450);
+            this.ClientSize = new System.Drawing.Size(1634, 751);
             this.Controls.Add(this.PictureBox2);
             this.Controls.Add(this.LightnessBar);
             this.Controls.Add(this.lightText);
@@ -144,11 +135,9 @@
             this.Controls.Add(this.IHueBar);
             this.Controls.Add(this.FhueText);
             this.Controls.Add(this.FHueBar);
-            this.Controls.Add(this.PictureBox);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -156,8 +145,6 @@
         }
 
         #endregion
-
-        private PictureBox PictureBox;
         private HScrollBar FHueBar;
         private TextBox FhueText;
         private HScrollBar IHueBar;
@@ -167,5 +154,6 @@
         private TextBox lightText;
         private HScrollBar LightnessBar;
         private PictureBox PictureBox2;
+        private PictureBox pictureBox1;
     }
 }
